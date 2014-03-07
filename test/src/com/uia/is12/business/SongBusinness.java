@@ -6,6 +6,7 @@ package com.uia.is12.business;
 
 import com.uia.is12.data.SongDAO;
 import com.uia.is12.domain.Song;
+import java.sql.SQLException;
 
 /**
  *
@@ -17,7 +18,7 @@ public class SongBusinness {
     public SongBusinness() {
     }
     
-    public Song getSong(){
+    public Song getSong() throws SQLException{
        return songdao.getSong();
     }
 }
