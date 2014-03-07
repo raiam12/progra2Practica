@@ -37,7 +37,7 @@ public class SongDAO {
         ResultSet res = stat.executeQuery();
         
         while(res.next()){
-            System.out.println(res.getString("id")+"             "+res.getString("paragraph"));
+            verse.add(new Verse(res.getString("paragraph"),Integer.parseInt(res.getString("time"))));
         }
         
         stat.close();
@@ -46,7 +46,7 @@ public class SongDAO {
         
         
         
-        
+       /* 
         verse.add(new Verse("Best Song Ever",4000));
         verse.add(new Verse("Look, if you had one shot, one opportunity ",1000));
         verse.add(new Verse("to seize everything you ever wanted ",1000));
@@ -64,7 +64,7 @@ public class SongDAO {
         verse.add(new Verse("oh, there goes rabbit, he choked ",1000));
         verse.add(new Verse("hes so mad, but he wont give up that",1000));
         verse.add(new Verse("Eminem--Lose yourself",1000));
-        
+        */
         
         cancion.setVerse(verse);
         return cancion;
