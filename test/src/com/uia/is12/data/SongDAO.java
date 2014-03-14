@@ -4,6 +4,7 @@
  */
 package com.uia.is12.data;
 
+import com.uia.is12.conexiones.mySQLDB;
 import com.uia.is12.domain.Song;
 import com.uia.is12.domain.Verse;
 import java.sql.CallableStatement;
@@ -18,56 +19,35 @@ import java.util.ArrayList;
  * @author Administrador
  */
 public class SongDAO {
-    static final String JBCD ="com.mysql.jdbc.Driver";
-    static final String DB_URL ="jdbc:mysql://localhost:3306/semana8";
-    
-    static final String USER ="root";
-    static final String PASS ="root";
-    Connection con = null;
-    CallableStatement stat = null;
+    private final mySQLDB conector = new mySQLDB();
     public SongDAO() {
     }
     
     public Song getSong() throws SQLException{
+        
         Song cancion = new Song();
-        ArrayList<Verse> verse = new ArrayList<Verse>();
-        con = DriverManager.getConnection(DB_URL, USER, PASS);
-        String sql = "SELECT * FROM semana8.verse";
-        stat = con.prepareCall(sql);
-        ResultSet res = stat.executeQuery();
-        
-        while(res.next()){
-            verse.add(new Verse(res.getString("paragraph"),Integer.parseInt(res.getString("time"))));
-        }
-        
-        stat.close();
-        con.close();
-        
-        
-        
-        
-       /* 
-        verse.add(new Verse("Best Song Ever",4000));
-        verse.add(new Verse("Look, if you had one shot, one opportunity ",1000));
-        verse.add(new Verse("to seize everything you ever wanted ",1000));
-        verse.add(new Verse("One moment",1000));
-        verse.add(new Verse("would you capture it or just let it slip?",1000));
-        verse.add(new Verse("His palms are sweaty, knees weak, arms are heavy ",1000));
-        verse.add(new Verse("there'ss vomit on his sweater already, mom's spaghetti ",1000));
-        verse.add(new Verse("he's nervous, but on the surface he looks calm and ready",1000));
-        verse.add(new Verse("to drop bombs, but he keeps on forgettin ",1000));
-        verse.add(new Verse("what he wrote down, the whole crowd goes so loud",1000));
-        verse.add(new Verse("he opens his mouth, but the words won't come out",1000));
-        verse.add(new Verse("he's chokin, how everybody's jokin now ",1000));
-        verse.add(new Verse("the clocks run out, times up over, bloah!",1000));
-        verse.add(new Verse("snap back to reality, oh there goes gravity ",1000));
-        verse.add(new Verse("oh, there goes rabbit, he choked ",1000));
-        verse.add(new Verse("hes so mad, but he wont give up that",1000));
-        verse.add(new Verse("Eminem--Lose yourself",1000));
-        */
-        
+        ArrayList<Verse> verse = new ArrayList();
+        //verse = conector.executeQuery("SELECT * FROM verse");
         cancion.setVerse(verse);
         return cancion;
+    }
+    
+    public void addVerse(Song poem) throws SQLException{
+        String sql = "INSERT INTO poem values('"+poem.getID()+"','"+poem.getName()+"')";
+        conector.execute(sql);
+        conector.closeExecute();
+    }
+    
+    public boolean exists(Song poem) throws SQLException{
+       boolean exist = false;
+       System.out.println(poem.getName());
+        ResultSet set = conector.executeQuery("SELECT * FROM poem WHERE name ='"+poem.getName()+"'");
+        if(set.next()){
+            exist = true;
+        }
+        conector.closeexecuteQuery();
+        return exist;
+        
     }
     
 }

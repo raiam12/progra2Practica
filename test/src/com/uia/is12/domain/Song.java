@@ -13,6 +13,15 @@ import java.util.ArrayList;
 public class Song {
     private ArrayList<Verse> verse;
     private String name;
+    private int ID;
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public Song() {
     }
@@ -32,6 +41,8 @@ public class Song {
     public void setName(String name) {
         this.name = name;
     }
+
+ 
     
     
 }

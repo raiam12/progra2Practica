@@ -21,4 +21,12 @@ public class SongBusinness {
     public Song getSong() throws SQLException{
        return songdao.getSong();
     }
+    
+    public void addPoem(Song poem) throws SQLException, Exception{
+        if(!(songdao.exists(poem))){
+           songdao.addVerse(poem);
+        } else {
+            throw new Exception("El poema ya existe en la BD");
+        }
+    }
 }
